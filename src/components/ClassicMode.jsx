@@ -39,6 +39,10 @@ function ClassicMode() {
         dispatch({type: "reset"});
     }
 
+    const handlePause = () => {
+        dispatch({type: "pause"});
+    }
+
     useEffect(() => {
         if (!state.paused && state.level < 21) {
             timerId = setInterval(() => dispatch({type: "drop"}), LEVEL[state.level]);
@@ -93,10 +97,25 @@ function ClassicMode() {
 
         if (!state.paused) {
             let shape = SHAPES[state.next];
+            let x, y;
+            switch (shape) {
+                case SHAPES.I:
+                    x = 0;
+                    y = 0;
+                    break;
+                case SHAPES.O:
+                    x = 1;
+                    y = 1;
+                    break;
+                default:
+                    x = 0;
+                    y = 1;
+                    break;
+            }
             shape.forEach((row, dy) => {
                 row.forEach((val, dx) => {
                     if (val > 0) {
-                        squareDraw(ctx, dx, dy, val, CLASSIC_SIZE);
+                        squareDraw(ctx, x + dx, y + dy, val, CLASSIC_SIZE);
                     }
                 });
             });
@@ -104,22 +123,37 @@ function ClassicMode() {
     });
     
     return (
-        <>
+        <div className="classic-mode">
             <canvas
                 ref={mainRef}
                 width={CLASSIC_COLS * CLASSIC_SIZE}
                 height={CLASSIC_ROWS * CLASSIC_SIZE}
             />
-            <button onClick={handleReset}>RESET</button>
-            <canvas
-                ref={nextRef}
-                width={CLASSIC_SIZE * 4}
-                height={CLASSIC_SIZE * 4}
-            />
-            <h2>Score: {state.score}</h2>
-            <h2>Lines: {state.lines}</h2>
-            <h2>Level: {state.level}</h2>
-        </>
+            <div className="info-bar">
+                <div>
+                    <canvas
+                        ref={nextRef}
+                        width={CLASSIC_SIZE * 4}
+                        height={CLASSIC_SIZE * 4}
+                    />
+                    <h2>Score: {state.score}</h2>
+                    <h2>Lines: {state.lines}</h2>
+                    <h2>Level: {state.level}</h2>
+                </div>
+                <div className="game-buttons">
+                    {
+                        state.paused ?
+                        <button onClick={handlePause} disabled={state.over}>RESUME</button> :
+                        <button onClick={handlePause} disabled={state.over}>PAUSE</button>
+                    }
+                    {
+                        (state.paused && state.over) ?
+                        <button onClick={handleReset}>START</button> :
+                        <button onClick={handleReset}>RESET</button>
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
 

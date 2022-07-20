@@ -1,3 +1,25 @@
+body {
+    font-family: sans-serif;
+}
+
 canvas {
     border: solid 2px;
+}
+
+.classic-mode {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+}
+
+.info-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }

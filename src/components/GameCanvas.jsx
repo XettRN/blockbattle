@@ -98,7 +98,7 @@ function init(i) {
         level: 0,
         lines: 0,
         paused: i.paused,
-        over: false
+        over: i.over
     };
 }
 
@@ -279,7 +279,8 @@ function reducer(state, action) {
                 cols: state.grid[0].length,
                 id: IDS[Math.ceil(Math.random() * 7)],
                 next: IDS[Math.ceil(Math.random() * 7)],
-                paused: false
+                paused: false,
+                over: false
             });
         }
         else {
@@ -295,7 +296,8 @@ export function useMainCanvas(rows, cols, blockSize) {
         cols: cols,
         id: IDS[0],
         next: IDS[0],
-        paused: true
+        paused: true,
+        over: true
     }, init);
 
     useEffect(() => {
@@ -331,6 +333,8 @@ export function useMainCanvas(rows, cols, blockSize) {
         else {
             ctx.font = "bold 48px sans-serif";
             ctx.textAlign = "center";
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "black";
             ctx.fillText("PAUSED", (cols / 2) * blockSize, (rows / 2) * blockSize);
         }
     });
