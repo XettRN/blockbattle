@@ -136,9 +136,9 @@ function ClassicMode() {
                         width={CLASSIC_SIZE * 4}
                         height={CLASSIC_SIZE * 4}
                     />
-                    <h2>Score: {state.score}</h2>
-                    <h2>Lines: {state.lines}</h2>
-                    <h2>Level: {state.level}</h2>
+                    <h2>Score:<br/>{state.score}</h2>
+                    <h2>Lines:<br/>{state.lines}</h2>
+                    <h2>Level:<br/>{state.level}</h2>
                 </div>
                 <div className="game-buttons">
                     {
